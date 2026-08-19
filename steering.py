@@ -1,7 +1,3 @@
-'''
-steering dose-response sweep with control battery; saves steering_results.npz
-'''
-
 import numpy as np
 from common import load_arrays, get_model, haufe
 import torch

@@ -1,5 +1,5 @@
 '''
-classify top-20 variance dims per layer: taste, length, entangled, neither
+classify top-20 variance dims per layer
 '''
 
 import numpy as np

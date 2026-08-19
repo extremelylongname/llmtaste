@@ -1,5 +1,5 @@
 '''
-project length nuisance out of taste directions; certify by split-half
+kill all text length contamination
 '''
 
 import numpy as np
@@ -25,7 +25,7 @@ for pc, v in enumerate(dirs):
 	v_clean = v - N @ (N.T @ v)
 	v_clean /= np.linalg.norm(v_clean)
 	v_cleans.append(v_clean)
-	print(f"PC{pc+1} retained {np.dot(v_clean, v)}  len-corr {np.corrcoef(x @ v_clean, token_counts)[0, 1]}  own-taste {np.corrcoef(x @ v_clean, pca_scores[:, pc])[0, 1]}")
+	print(f"PC{pc+1} retained: {np.dot(v_clean, v)} corr: {np.corrcoef(x @ v_clean, token_counts)[0, 1]} own-taste: {np.corrcoef(x @ v_clean, pca_scores[:, pc])[0, 1]}")
 
 B = np.array(v_cleans).T
 Q = np.linalg.qr(B)[0]
@@ -52,4 +52,4 @@ for s in range(5):
 	m = np.isin(groups, half)
 	d1, d2 = cleaned_directions(np.where(m)[0]), cleaned_directions(np.where(~m)[0])
 	half_cos.append([np.dot(d1[k], d2[k]) for k in range(d1.shape[0])])
-print("split-half cosines:", {f"PC{k+1}": round(float(c), 3) for k, c in enumerate(np.mean(half_cos, axis=0))})
+print([f"PC{k+1}": round(float(c), 3) for k, c in enumerate(np.mean(half_cos, axis=0))])

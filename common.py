@@ -71,8 +71,8 @@ def extract_activations(template, layer=None):
 	acts, name_tokens = [], []
 	for food in foods:
 		prompt = template.format(x=food)
-		# token span of the food name itself, template-agnostic:
-		# keep tokens whose char range overlaps [start, end) of the name.
+		# token span of the food name
+		# keep tokens whose length overlaps [start, end) of the name.
 		start = prompt.index(food)
 		end = start + len(food)
 		enc = processor.tokenizer(prompt, return_offsets_mapping=True)
@@ -83,7 +83,7 @@ def extract_activations(template, layer=None):
 			out = model(**inputs, output_hidden_states=True, use_cache=False)
 		if layer is None:
 			h = torch.stack([hs[0] for hs in out.hidden_states[:-1]]).float().cpu().numpy()
-			acts.append(h[:, keep, :].mean(axis=1)) #average across tokens
+			acts.append(h[:, keep, :].mean(axis=1))
 		else:
 			h = out.hidden_states[layer][0].float().cpu().numpy()
 			acts.append(h[keep].mean(axis=0))

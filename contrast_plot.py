@@ -1,5 +1,5 @@
 '''
-dose-response and contrast figures from the saved steering sweep
+steering sweep plot
 '''
 
 import numpy as np
